@@ -114,6 +114,9 @@ bool ActorGraph::buildGraphFromFile(const char* filename) {
 /* TODO */
 void ActorGraph::BFS(const string& fromActor, const string& toActor,
                      string& shortestPath) {
+    if (fromActor.size() == 0 || toActor.size() == 0) {
+        return;
+    }
     if (this->ofActors->find(fromActor) == this->ofActors->end() ||
         this->ofActors->find(toActor) == this->ofActors->end()) {
         return;
@@ -180,4 +183,25 @@ void ActorGraph::predictLink(const string& queryActor,
 }
 
 /* TODO */
-ActorGraph::~ActorGraph() {}
+ActorGraph::~ActorGraph() {
+    auto startOfActorTable = this->ofActors->begin();
+    auto endOfActorTable = this->ofActors->end();
+    unordered_set<MovieNode*>* ofAllMovies = new unordered_set<MovieNode*>();
+    while (startOfActorTable != endOfActorTable) {
+        auto currentActor = startOfActorTable->second;
+        auto actorMovies = currentActor->inMovies();
+        for (unsigned int i = 0; i < actorMovies->size(); i++) {
+            ofAllMovies->insert(actorMovies->at(i));
+        }
+        delete currentActor;
+        startOfActorTable++;
+    }
+    auto startOfMovieTable = ofAllMovies->begin();
+    auto endOfMovieTable = ofAllMovies->end();
+    while (startOfMovieTable != endOfMovieTable) {
+        delete (*startOfMovieTable);
+        startOfMovieTable++;
+    }
+    delete ofAllMovies;
+    delete this->ofActors;
+}

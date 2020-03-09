@@ -17,11 +17,14 @@ class Vertex {
     float y;
     vector<Edge*> outEdges;  // the adjacency list of this vertex that contains
                              // all outgoing edges
+    Vertex* ofPrev;
+    int distance;
 
     // TODO: you may add more member variables here
 
     /* The constructor that creates a new vertex */
-    Vertex(const string& name, float x, float y) : name(name), x(x), y(y) {}
+    Vertex(const string& name, float x, float y)
+        : name(name), x(x), y(y), ofPrev(nullptr), distance(-1) {}
 };
 
 #endif  // VERTEX_HPP

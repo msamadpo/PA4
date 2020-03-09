@@ -52,6 +52,8 @@ class Map {
     /* TODO */
     void crucialRoads(vector<Edge*>& roads);
 
+    bool DFS(Vertex* from, Vertex* to, Edge* toAvoid);
+
     /* Destructor of Map graph */
     ~Map();
 };
